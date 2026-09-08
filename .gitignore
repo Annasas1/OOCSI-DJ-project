@@ -19,7 +19,7 @@ Thumbs.db
 .idea/
 *.swp
 
-# Secrets - keep credentials out of the repo
+# Secrets keep credentials out of the repo
 secrets.h
 credentials.h
 config_private.h

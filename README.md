@@ -4,9 +4,9 @@ An ESP32 connected to a magnet sensor. In the vinyl there will be the magnet to 
 Once the ESP32 gets a signal the sensor is triggered the color in accordance with the state will be triggered.
 
 ## Team
-Anna Sas
-Jobst Knief
-Jana Kiš
+Anna Sas -
+Jobst Knief -
+Jana Kiš -
 Benjamin Ackermans
 
 

@@ -2,16 +2,16 @@
 
 
 #include <WiFi.h>
-// #include <OOCSI.h>  // TODO: include your OOCSI library once installed
+// #include <OOCSI.h>  // TODO: include  OOCSI library once installed
 
-// ---- WiFi credentials ----
 const char* ssid = "YOUR_WIFI_SSID";
 const char* password = "YOUR_WIFI_PASSWORD";
 
-// ---- OOCSI settings ----
-const char* oocsiServer = "YOUR_OOCSI_SERVER";  
-const char* oocsiName = "YOUR_CLIENT_NAME";     
-const char* oocsiChannel = "YOUR_CHANNEL_NAME";  
+//  OOCSI settings 
+//const char* oocsiServer = "OOCSI_SERVER";  
+//const char* oocsiName = "CLIENT_NAME";     
+//const char* oocsiChannel = "CHANNEL_NAME";  
+
 void setup() {
   Serial.begin(115200);
 
