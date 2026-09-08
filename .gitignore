@@ -1,0 +1,25 @@
+# Build artifacts
+build/
+.pio/
+.pioenvs/
+.piolibdeps/
+*.bin
+*.elf
+*.hex
+
+# Arduino IDE
+*.ino.cpp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+
+# Secrets - keep credentials out of the repo
+secrets.h
+credentials.h
+config_private.h
