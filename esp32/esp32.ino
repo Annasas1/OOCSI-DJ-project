@@ -2,8 +2,8 @@
 #include "OOCSI.h"
 
 // WiFi
-const char* ssid = "KPN4F3346";
-const char* password = "WndZntqJLj4WJVMr";
+const char* ssid = "";
+const char* password = "";
 const int reedPin = 14;
 
 // OOCSI
