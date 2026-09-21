@@ -1,27 +1,50 @@
-// OOCSI + ESP32 starter sketch
-
-
 #include <WiFi.h>
-// #include <OOCSI.h>  // TODO: include  OOCSI library once installed
+#include "OOCSI.h"
 
-const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD";
+// WiFi
+const char* ssid = "KPN4F3346";
+const char* password = "WndZntqJLj4WJVMr";
+const int reedPin = 14;
 
-//  OOCSI settings 
-//const char* oocsiServer = "OOCSI_SERVER";  
-//const char* oocsiName = "CLIENT_NAME";     
-//const char* oocsiChannel = "CHANNEL_NAME";  
+// OOCSI
+const char* OOCSIName = "ESP32";
+const char* hostserver = "oocsi.id.tue.nl";
+
+OOCSI oocsi = OOCSI();
+
+void processOOCSI() {
+}
 
 void setup() {
-  Serial.begin(115200);
+  pinMode(reedPin, INPUT_PULLUP);
+  Serial.begin(9600);
+  delay(2000);
 
-  // TODO: connect to WiFi
-  // TODO: connect to OOCSI
-  // TODO: subscribe to channel(s) if receiving data
+  Serial.println("Connecting to OOCSI...");
+
+  oocsi.connect(
+    "ESP32",
+    "oocsi.id.tue.nl",
+    ssid,
+    password,
+    processOOCSI
+  );
+
+  Serial.println("oocsi.connect() returned");
 }
 
 void loop() {
-  // TODO: read sensor / check input
-  // TODO: send data over OOCSI
-  // TODO: handle incoming OOCSI messages HELLOOOOOOOOO
+  if (digitalRead(reedPin) == LOW) 
+  {
+    Serial.println("Magnet Found");
+    oocsi.newMessage("ESP-test");
+    oocsi.addString("Message", "Magnet found");
+    oocsi.sendMessage();
+  } 
+  else 
+  {
+    Serial.println("Magnet Lost");
+  }
+
+  delay(1000);
 }
