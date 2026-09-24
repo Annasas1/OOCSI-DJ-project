@@ -19,60 +19,62 @@ OOCSI oocsi = OOCSI();
 CRGB leds[NUM_LEDS]; // array so we can hold the color of every LED 
 
 // state
-// mirrors current_state in the p5 sketch: "red" | "green" | "blue" | "disco"
-String current_state = "red"; //first state
+enum State {
+    OFF, //0
+    RED_SOLID,
+    GREEN_SOLID,
+    BLUE_SOLID,
+    DISCO_MODE //4
+    
+};
+
+//0 state
+State current_state = OFF;
+
+CRGB RED = CRGB(255, 0, 0);
+CRGB GREEN = CRGB(0, 255, 0);
+CRGB BLUE = CRGB(0, 0, 255);
+CRGB BLACK = CRGB(0, 0, 0);
+CRGB stateColor[5] = { BLACK, RED, GREEN, BLUE, BLACK }; 
+
+
 
 // disco timing 
 unsigned long lastDiscoStep = 0; //timestamp ms of last colro change
 const unsigned long discoStepMs = 500;   // ~30 frames at 60fps
 int discoPhase = 0; //which of the 3 colors we r currenly on cycles: 0->1->2->0
+CRGB discoColors[3] = { RED, GREEN, BLUE };
 
 //  Handle incoming OOCSI message 
 void processOOCSI() {
   //  table sends a raw magnet count (0-4) (i think this is better then string)
   if (oocsi.has("count")) {
-    int count = oocsi.getInt("count");
-    switch (count) {
-      case 1: current_state = "red";   break;
-      case 2: current_state = "green"; break;
-      case 3: current_state = "blue";  break;
-      case 4: current_state = "disco"; break;
-      default: current_state = "off";  break;
-    }
+    int count = oocsi.getInt("count", 0);
+    
+    count = constrain(count, 0, 4);
+    current_state = (State)count;
+    
   }
 }
 
-//  Apply current_state to the LEDs 
+void updateLightStickColor(CRGB Color) {
+    fill_solid(leds, NUM_LEDS, Color);
+    FastLED.show();
+}
+
 void updateLightStick() {
-  if (current_state == "red") {
-    fill_solid(leds, NUM_LEDS, CRGB(255, 0, 0));
-    FastLED.show();
-  }
-  else if (current_state == "green") {
-    fill_solid(leds, NUM_LEDS, CRGB(0, 255, 0));
-    FastLED.show();
-  }
-  else if (current_state == "blue") {
-    fill_solid(leds, NUM_LEDS, CRGB(0, 0, 255));
-    FastLED.show();
-  }
-  else if (current_state == "disco") {
-    // non-blocking cycle R -> G -> B -> R, replaces p5's frameCount logic
-    unsigned long now = millis(); //Different then delay() js, returns ms since ESP32 booted
-    if (now - lastDiscoStep >= discoStepMs) { 
+  if (current_state == DISCO_MODE) {
+    unsigned long now = millis();
+    if (now - lastDiscoStep >= discoStepMs) {
       lastDiscoStep = now;
       discoPhase = (discoPhase + 1) % 3;
-
-      CRGB colors[3] = { CRGB(255,0,0), CRGB(0,255,0), CRGB(0,0,255) };
-      fill_solid(leds, NUM_LEDS, colors[discoPhase]);
-      FastLED.show();
-    } //in a nutshell: every time 500ms have passes, step to the next color in the colors[] array and redraw, if less then 500ms has passed do nothing
-  }
-  else { // "off" / idle
-    fill_solid(leds, NUM_LEDS, CRGB::Black);
-    FastLED.show();
+      updateLightStickColor(discoColors[discoPhase]);
+    }
+  } else {
+    updateLightStickColor(stateColor[current_state]);
   }
 }
+
 
 void setup() {
   Serial.begin(9600);
