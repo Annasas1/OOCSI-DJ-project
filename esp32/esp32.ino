@@ -15,7 +15,7 @@ OOCSI oocsi = OOCSI();
 void processOOCSI() {
 }
 
-void setup() {
+void setup() { 
   pinMode(reedPin, INPUT_PULLUP);
   Serial.begin(9600);
   delay(2000);
