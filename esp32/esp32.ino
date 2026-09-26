@@ -16,7 +16,17 @@ const char* hostserver = "oocsi.id.tue.nl";
 
 OOCSI oocsi = OOCSI();
 
+<<<<<<< HEAD
 void setup() {
+=======
+void processOOCSI() {
+}
+
+void setup() { 
+  pinMode(reedPin, INPUT_PULLUP);
+  Serial.begin(9600);
+  delay(2000);
+>>>>>>> 233b1b4b18ee1b0b76661ea2c1408466670a3f0e
 
   pinMode(reedPin1, INPUT_PULLUP);
   pinMode(reedPin2, INPUT_PULLUP);
