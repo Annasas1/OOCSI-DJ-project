@@ -1,0 +1,136 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="https://oocsi.id.tue.nl/assets/images/OOCSI_logo_no_text.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" type="text/css" href="https://oocsi.id.tue.nl/assets/css/pico.indigo.min.css" class="native-dark-class-original">
+  <script type="text/javascript" src="https://oocsi.id.tue.nl/assets/js/p5.min.js"></script><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><style lang="en" type="text/css" id="dark-mode-native-sheet"></style>
+  <script type="text/javascript" src="https://oocsi.id.tue.nl/assets/js/oocsi-web.js"></script>
+  <script type="text/javascript" src="https://oocsi.id.tue.nl/assets/js/things/oocsi-things.min.js"></script>
+<style></style></head>
+<body>
+    <div id="header"></div>
+    <div id="canvasContainer"><dialog id="team-modal" open=""><article>
+      <h2><a href="index.html" style="color: var(--pico-h2-color); text-decoration: none;" alt="Back to the overview" title="Back to the overview">OOCSI Things 🌟</a></h2>
+      <label for="team-choice">Choose a team:</label>
+      <form>
+        <fieldset role="group">
+          <input list="team-choices" id="team-choice" name="team-choice">
+          <datalist id="team-choices">
+            <option value="Team 1"></option> <option value="Team 2"></option> <option value="Team 3"></option> <option value="Team 4"></option> <option value="Team 5"></option> <option value="Team 6"></option> <option value="Team 7"></option> <option value="Team 8"></option> <option value="Team 9"></option> <option value="Team 10"></option> <option value="Team 11"></option> <option value="Team 12"></option> <option value="Team 13"></option> <option value="Team 14"></option> <option value="Team 15"></option> <option value="Team 16"></option> <option value="Team 17"></option> <option value="Team 18"></option> <option value="Team 19"></option> <option value="Team 20"></option>
+            <option value="Team Test"></option>
+          </datalist>
+          <input type="submit" value="Go!">
+        </fieldset>
+      </form>
+      <small>
+        Connecting via <code>oocsi.id.tue.nl</code>... <a href="#" id="download-source" style="float: right">Download Source</a>
+      </small>
+    </article></dialog></div>
+<script type="text/javascript">
+
+  // register service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('Service Worker registered', reg))
+        .catch(err => console.log('Service Worker registration failed', err));
+    });
+  }
+
+  // define your teamspace if this is predefined no menu of choosing team.
+  oocsiThingsConfig = {
+    // enter your team name, or leave empty for team selection dialog
+    teamspace: "team-1"
+  };
+
+  // thing variables
+  let current_state;
+
+  // define thing
+  function thing() {
+
+    // register this thing with the name 'Lampo' and data path 'lampo';
+    // this app uses 'toggle' and 'dim' as input, and 'toggle' as output
+    oocsiThings.register('LampoRGB', 'lampoRGB', ['current_state'], [''])
+
+    // define own shared data
+    
+    current_state = oocsiThings.data('state');
+    console.log('initial state on load:', current_state());
+   
+    // connect to external data 
+    //oocsiThings.connect('touchee', 'y', 'dim')
+    //oocsiThings.connect('k0bolt', 'toggle', 'toggle')
+    //oocsiThings.connect('mr-kip', 'd1', 'dim')
+    //oocsiThings.connect('chuck', 'd1', 'dim')
+    //oocsiThings.connect('coloradocam', 'brightness', 'dim')
+    //oocsiThings.connect('voluma', 'volume', 'dim')
+    //oocsiThings.connect('hando', 'dim', 'dim')
+    //oocsiThings.connect('hando', 'toggle', 'toggle')
+    //oocsiThings.connect('objecter', 'dim', 'dim')
+    //oocsiThings.connect('objecter', 'toggle', 'toggle')
+
+    //Below is subscribing to JJ 'ESP_test_Team_1'
+    OOCSI.subscribe('ESP_Test_Team_1', function(message) {
+      console.log(message);
+      let value = message.data.Message;
+
+      if (value === 0) {
+        current_state('black');
+      } else if (value === 1) {
+        current_state('red');
+      } else if (value === 2) {
+        current_state('green');
+      } else if (value === 3) {
+        current_state('blue');
+      } else if (value === 4) {
+        current_state('disco');
+      }
+    });
+  }
+
+  function setup() {
+    let canvas = createCanvas(windowWidth, windowHeight);
+    canvas.parent('canvasContainer');
+  }
+
+  function draw() {
+  background(0);
+    if (current_state() == 'black') {
+      fill( 0, 0, 0)
+    }
+    if (current_state() == 'red') {
+      fill( 255, 0, 0 );
+    }
+    if (current_state() == 'green') {
+      fill( 0, 255, 0 );
+    }
+    if (current_state() == 'blue') {
+      fill( 0, 0, 255 );
+    }
+    else if (current_state() == 'disco') {
+      let phase = floor(frameCount/ 30) % 3;
+      if (phase == 0) {
+        fill( 255, 0, 0 );
+      } else if (phase == 1) {
+        fill( 0, 255, 0 );
+      } else {
+        fill( 0, 0, 255 );
+      }
+    }
+    rect(50, 50, width-100, height-100);
+  }
+
+  // react to touch or mouse presses
+  function touchEnded() { 
+  var states = ['black', 'red', 'green', 'blue', 'disco']
+  var currentIndex = states.indexOf(current_state());
+  var nextIndex = (currentIndex + 1) % states.length;
+  current_state(states[nextIndex]);
+  }
+</script>
+</body></html>
