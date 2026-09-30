@@ -5,7 +5,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="apple-touch-icon" href="https://oocsi.id.tue.nl/assets/images/OOCSI_logo_no_text.png">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifgest" href="manifest.json">
   <link rel="stylesheet" type="text/css" href="https://oocsi.id.tue.nl/assets/css/pico.indigo.min.css" class="native-dark-class-original">
   <script type="text/javascript" src="https://oocsi.id.tue.nl/assets/js/p5.min.js"></script><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><style lang="en" type="text/css" id="dark-mode-native-sheet"></style>
   <script type="text/javascript" src="https://oocsi.id.tue.nl/assets/js/oocsi-web.js"></script>
@@ -91,6 +91,7 @@
         current_state('disco');
       }
     });
+    OOCSI.connect('wss://oocsi.id.tue.nl/ws', OOCSI.handle());
   }
 
   function setup() {
