@@ -69,7 +69,7 @@ Code: `esp32_esp32.ino`
 ### 1. Physical side
 1. Wire the 4 reed switches: one leg of each switch to its GPIO pin (13, 14, 15, 16), the other leg to GND.
 2. Open `esp32_esp32.ino` in the Arduino IDE.
-3. Fill in your WiFi name and password in `ssid` and `password`.
+3. Fill in your WiFi name and password in `ssid` and `password`. (Also ensure to add your own channel name + team names etc. to all documents, so we dont get conflicting data flow.)
 4. Select your ESP32 board and the right port (Tools menu).
 5. Upload the sketch.
 6. Open the Serial Monitor (115200 baud) to check that the ESP32 starts and connects.
