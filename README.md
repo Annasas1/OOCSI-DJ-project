@@ -77,7 +77,7 @@ Code: `esp32_esp32.ino`
 ### 2. Digital side
 1. Put `lampoRGBwithSOUND.html` together with the sound files and gif in one folder (see above).
 2. Open the page in a browser. It must be served the same way as the other Lampo pages (e.g. hosted, or via a local server such as the VS Code Live Server extension), because the service worker does not work when opening a file directly.
-3. Click/tap the page once. Browsers block audio until you have interacted with the page, so the disco music will not start before that.
+3. To be able to test page freely (disconnected from physical side), you can also use mouse presses to change state, you can now test it by clicking on the page. (If you want this removed delete the touchEnded function) 
 4. Make sure the browser has internet access, since the libraries and the OOCSI connection are loaded online.
 
 ### 3. Try it
@@ -101,18 +101,9 @@ Code: `esp32_esp32.ino`
 ## A checklist to check before u run the code/ when u run into issues:
 - [ ] Did you get all the necessary libraries?
 - [ ] Are you running the physical code in Arduino IDE or did u alter it correctly to run in VSCode? (In VSCode with PlatformIO you need `#include <Arduino.h>` at the top, a `platformio.ini` for your ESP32 board, and the OOCSI library added under `lib_deps`.)
-- [ ] Did you fill in your WiFi `ssid` and `password` in the sketch?
-- [ ] Is the ESP32 on a WiFi network that can reach `oocsi.id.tue.nl`?
-- [ ] Does the sketch compile? Check for leftover lines like a duplicate `void setup()` or an undefined `reedPin` (the pins are named `reedPin1` to `reedPin4`).
-- [ ] Is the channel name exactly the same in both files (`ESP_Test_Team_1`, including capitals)?
-- [ ] Is the message field named `Message` on both sides?
-- [ ] Are the reed switches connected to the right pins and to GND?
-- [ ] Does the Serial Monitor show the ESP32 starting up? (Baud rate 115200.)
 - [ ] Is the HTML page served via a server/hosting and not just double-clicked open?
-- [ ] Are the mp3 files and `pitbull.gif` in the same folder as the HTML file, with exactly the same file names?
-- [ ] Did you click on the page once so the browser allows sound?
+- [ ] Are the mp3 files and `x.gif`  in the same folder as the HTML file, with exactly the same file names (for correct path name)?
 - [ ] Does the screen still react when you tap it? If yes, the page works and the problem is on the ESP32/OOCSI side.
-- [ ] Still nothing? Open the browser console (F12), the page logs every message it receives from OOCSI.
 
 ## Data flow:
 <img width="1668" height="2154" alt="OOCSI-8 1" src="https://github.com/user-attachments/assets/6a6be8c3-353b-470e-8d81-ca91ebe434bd" />
