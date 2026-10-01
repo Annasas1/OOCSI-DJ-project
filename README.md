@@ -26,6 +26,10 @@ Benjamin Ackermans
 4 -> disco
 
 
+
+## Physical component
+
+
 ## Setup / How to Run
 1. Connect the ESP32 to the ESP32 code
 2. Open the webbrowser and see it react to magnets!
