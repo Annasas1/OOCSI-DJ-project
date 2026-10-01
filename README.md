@@ -22,7 +22,7 @@ Benjamin Ackermans
 ## Hardware 
 - ESP32
 - Sensors/actuators used:
-  - Reed switches
+  - Reed switches (Important note: DO NOT USE HOT GLUE on these, it will mess with the sensors) 
   - Magnets
 - Wires
 - Breadboard
