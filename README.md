@@ -8,6 +8,7 @@ For our module A and module B, we altered the Lampo code to make a browser react
 | 2 | green |
 | 3 | blue |
 | 4 | disco |
+
 Thus depending on the amount of reed sensors triggered by a magnet, the state will change and the color on the browser will also be altered. 
 Note that only the *amount* of triggered sensors matters, not which specific sensors are triggered. Feel free to alter this if you feel it better suits your project! :) 
 
@@ -64,8 +65,26 @@ Code: `esp32_esp32.ino`
 - The ESP32 connects to the OOCSI server `oocsi.id.tue.nl` under the name `ESP32` using your WiFi credentials (`ssid` and `password` at the top of the sketch).
 
 ## Setup / How to Run
-1. Connect the ESP32 to the ESP32 code
-2. 
+
+### 1. Physical side
+1. Wire the 4 reed switches: one leg of each switch to its GPIO pin (13, 14, 15, 16), the other leg to GND.
+2. Open `esp32_esp32.ino` in the Arduino IDE.
+3. Fill in your WiFi name and password in `ssid` and `password`.
+4. Select your ESP32 board and the right port (Tools menu).
+5. Upload the sketch.
+6. Open the Serial Monitor (115200 baud) to check that the ESP32 starts and connects.
+
+### 2. Digital side
+1. Put `lampoRGBwithSOUND.html` together with the sound files and gif in one folder (see above).
+2. Open the page in a browser. It must be served the same way as the other Lampo pages (e.g. hosted, or via a local server such as the VS Code Live Server extension), because the service worker does not work when opening a file directly.
+3. Click/tap the page once. Browsers block audio until you have interacted with the page, so the disco music will not start before that.
+4. Make sure the browser has internet access, since the libraries and the OOCSI connection are loaded online.
+
+### 3. Try it
+1. Hold a magnet next to a reed switch: the screen should change from black to red.
+2. Add more magnets: 2 = green, 3 = blue, 4 = disco.
+3. Remove magnets to go back down. Going down changes the color but does not play the ding.
+
 
 ## Required Libraries (unfinished but visible in code)
 **ESP32 (Arduino IDE)**
